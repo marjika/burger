@@ -3,7 +3,7 @@
 
 This full-stack application displays a list of burgers from a database. If the burger has been eaten (in other words, if the stored 'devoured' column is set to 'true' for that burger), it is displayed on the right side of the page.  Otherwise the burger is displayed on the left.  
 
-![Burgers on the sides](public/assets/img/start.jpg)
+![Burgers on the sides](public/assets/img/start.JPG)
 
 ### Changing Data
 
@@ -15,7 +15,7 @@ In the middle, there is a form area where the user can enter the name of another
 
 This application is a simple version of the MVC, or model-view-controller pattern.  The following is a screenshot of the structure of this application denoting the recommended architecture for the MVC model.
 
-![burger MVC architecture](public/assets/img/MVC.jpg)
+![burger MVC architecture](public/assets/img/MVC.JPG)
 
 
 ##### About this Application
