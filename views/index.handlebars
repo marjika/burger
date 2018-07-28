@@ -2,12 +2,12 @@
 
 <div class="col-sm-4">
     <div id="uneaten">
-            {{#each burgers}}
-                {{#unless devoured}}
+        {{#each burgers}}
+            {{#unless devoured}}
                 <p>{{this.id}}. {{this.burger_name}}
-                 <button class="change-devoured" data-id="{{id}}">Devour it!</button></p>
-                {{/unless}}  
-            {{/each}}
+                <button class="change-devoured" data-id="{{id}}">Devour it!</button></p>
+            {{/unless}}  
+        {{/each}}
     </div>
 </div>
 
@@ -15,20 +15,6 @@
     <div id="burgerPic">
         <img src="/assets/img/hamburger-icon.png" class="img-fluid" alt="Hamburger">
     </div>
-</div>
-
-<div class="col-sm-4">
-    <div id="eaten">
-            {{#each burgers}}
-                {{#if devoured}} 
-                <p>{{this.id}}. {{this.burger_name}}</p>
-                {{!-- {{> burgers/burger-block devoured=false}} --}}
-                {{/if}}
-            {{/each}} 
-    </div>
-</div>
-
-<div class="col-sm-12">
     <div id="formArea">
         <h4>Enter a burger you want to eat. Click the submit button.</h4>
         <form class="create-form">
@@ -40,48 +26,59 @@
     </div>
 </div>
 
+<div class="col-sm-4">
+    <div id="eaten">
+        {{#each burgers}}
+            {{#if devoured}} 
+                <p>{{this.id}}. {{this.burger_name}}</p>
+            {{/if}}
+        {{/each}} 
+    </div>
+</div>
+
 <script>
     $(function() {
+        //When user clicks 'Devour it' button, 'devoured' changed to 'true' for that id
         $(".change-devoured").on("click", function(event) {
-            console.log("clicked");
             var id = $(this).data("id");
             var changedDevoured = {
                 devoured: true
                 };
-
             // Send the PUT request.
             $.ajax("/api/burgers/" + id, {
-            type: "PUT",
-            data: changedDevoured
+                type: "PUT",
+                data: changedDevoured
             }).then(
-            function() {
-                console.log("changed devoured to true");
-                // Reload the page to get the updated list
-                location.reload();
-            }
-            );
-        });
-          $(".create-form").on("submit", function(event) {
-                // Make sure to preventDefault on a submit event.
-                event.preventDefault();
-
-                var newBurger = {
-                burger_name: $("#burgs").val().trim(),
-                devoured: false
-                };
-                console.log(newBurger);
-
-                // Send the POST request.
-                $.ajax("/api/burgers", {
-                type: "POST",
-                data: newBurger
-                }).then(
                 function() {
-                    console.log("created new burger");
+                    console.log("changed devoured to true");
                     // Reload the page to get the updated list
                     location.reload();
                 }
+            );
+        });
+        //When user submits a new burger, it is added to the database with devoured=false
+        $(".create-form").on("submit", function(event) {
+            event.preventDefault();
+            if ($("#burgs").val().trim()==="") {
+                location.reload();
+            }
+            else {
+                var newBurger = {
+                    burger_name: $("#burgs").val().trim(),
+                    devoured: false
+                };
+                // Send the POST request.
+                $.ajax("/api/burgers", {
+                    type: "POST",
+                    data: newBurger
+                }).then(
+                    function() {
+                        console.log("created new burger");
+                        // Reload the page to get the updated list
+                        location.reload();
+                    }
                 );
-            });
+            }
+        });
     });
 </script>

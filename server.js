@@ -1,3 +1,4 @@
+//Import express, body-parser, express-handlebars, and controller (routes)
 var express = require("express");
 var bodyParser = require("body-parser");
 
